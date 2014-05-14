@@ -3,7 +3,7 @@
 	 	* Created by The eXo Platform SAS
 	 	* Author : eXoPlatform
 	 	*         esslem.ghodbane@exoplatform.com
-	 	* January 09, 2013  
+	 	* January 09, 2013
 	 	*/
 
 	 	import javax.jcr.Node;
@@ -13,7 +13,7 @@
 		import org.exoplatform.services.wcm.core.NodeLocation;
 
    def jsManager = _ctx.getRequestContext().getJavascriptManager();
-   jsManager.require("SHARED/news-slider", "news-slider");
+   jsManager.require("SHARED/NewsSlider", "newsSlider").addScripts("newsSlider.initSlider();");
 %>
 
 <div id="$uicomponent.id" class="NewsPreviewerCLVTemplate">
@@ -40,7 +40,7 @@
 						</div>
 					<% }
 					%>
-					
+
 				</div>
 				<%
 			if (uicomponent.getUIPageIterator().getAvailable() == 0) {
@@ -68,11 +68,11 @@
 								def isShowDate = uicomponent.isShowField(UICLVPortlet.PREFERENCE_SHOW_DATE_CREATED);
 								def isShowLink = uicomponent.isShowField(UICLVPortlet.PREFERENCE_SHOW_LINK);
 								def isShowReadmore = uicomponent.isShowField(UICLVPortlet.PREFERENCE_SHOW_READMORE);
-								
-								def itemLink = uicomponent.getURL(viewNode);			
+
+								def itemLink = uicomponent.getURL(viewNode);
 								def itemDateCreated = uicomponent.getCreatedDate(viewNode);
-								def itemOwner = uicomponent.getAuthor(viewNode);			
-								
+								def itemOwner = uicomponent.getAuthor(viewNode);
+
 								def imgSrc = uicomponent.getIllustrativeImage(viewNode);
 								def isShowImage = uicomponent.isShowField(UICLVPortlet.PREFERENCE_SHOW_ILLUSTRATION) && imgSrc != null;
 
@@ -84,10 +84,10 @@
 								def itemSummary = uicomponent.getSummary(viewNode);
 								def itemSummaryField = uicomponent.getSummaryField(viewNode);
 								def isShowSummary = uicomponent.isShowField(UICLVPortlet.PREFERENCE_SHOW_SUMMARY) && itemSummary != null;
-								
+
 								%>
-								
-								
+
+
 									<div class="cn_content" style="$style">
 										<img alt="$itemName" src="$imgSrc" />
 										<h1><% print uicomponent.getInlineEditingField(viewNode, "exo:title", itemName, "TEXT", "CLVTitle_"+String.valueOf(i), "GroovyCLVTitle", true, "button_direction=left-to-right"); %></h1>
@@ -95,18 +95,18 @@
 										<% if (itemSummaryField!=null) {
 												%><p><%print uicomponent.getInlineEditingField(viewNode, itemSummaryField, itemSummary, "TEXTAREA", "Text_"+String.valueOf(i), "CLV1ColumnPresent", true);%></p><%
 											} %>
-										
+
 										<a href="$itemLink" target="_blank" class="cn_more"><%= _ctx.appRes("UICLVPresentation.label.readmore") %></a>
 									</div>
-								
+
 							<%
 							}
-							%>	
+							%>
 						</div>
 							<div id="cn_list" class="cn_list">
 								<div class="cn_page" style="display:block;">
 									<div class="cn_page" style="display:block;">
-										<% 
+										<%
 											i = 0;
 											for (viewNode in currentPageData) {
 												if(!Utils.isViewable(viewNode)) continue;
@@ -122,7 +122,7 @@
 												<div class="$style">
 													<h2><% print uicomponent.getInlineEditingField(viewNode, "exo:title", itemName, "TEXT", "CLVTitle_"+String.valueOf(i), "GroovyCLVTitle", true, "button_direction=left-to-right"); %></h2>
 												</div>
-										<% 
+										<%
 											}
 										%>
 									</div>
@@ -130,28 +130,34 @@
 							</div>
 					</div>
 				</div>
-				    		
+
 					<div class="CaptionFunc ClearFix">
 					<%
 		  				String labelRefreshAction = _ctx.appRes("UICLVPresentation.action.refresh");
 		  				def isShowRefresh = uicomponent.isShowField(UICLVPortlet.PREFERENCE_SHOW_REFRESH_BUTTON);
-      					if (isShowRefresh) { 
+      					if (isShowRefresh) {
 							String link = uicomponent.event("Refresh");
-					%>				
+					%>
 							<div class="CaptionRefresh">
 								<a href="$link">$labelRefreshAction</a>
 							</div>
-						<% 
+						<%
 						}
 						if (uicomponent.showPaginator()) {
 							uicomponent.renderChild(UICustomizeablePaginator.class);
-						} 
+						}
 					%>
-						
-					</div>				  	
+
+					</div>
 			  	</div>
-			  <%	
+			  <%
 			}
 		%>
 
 	</div>
+
+<script>
+  window.requite(["SHARED/news-slider-resources/NewsSlider"], function() {
+    initSlider();
+  });
+</script>
