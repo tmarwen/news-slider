@@ -13,7 +13,8 @@
 		import org.exoplatform.services.wcm.core.NodeLocation;
 
    def jsManager = _ctx.getRequestContext().getJavascriptManager();
-   jsManager.require("SHARED/NewsSlider", "newsSlider").addScripts("newsSlider.initSlider();");
+   def requireJS = jsManager.getRequireJS();
+   requireJS.require("SHARED/NewsSlider", "newsSlider");
 %>
 
 <div id="$uicomponent.id" class="NewsPreviewerCLVTemplate">
