@@ -1,6 +1,9 @@
 /**
- * Created by exo on 13/05/14.
- */
+* Created by The eXo Platform MEA
+* Author : Marwen Trabelsi
+*         mtrabelsi@exoplatform.com
+* May 13, 2014
+*/
 (function($) {
 
     var pages = $('#cn_list').find('.cn_page');
@@ -9,9 +12,8 @@
     var items = $('#cn_list').find('.cn_item');
     var jcn_preview = $('#cn_preview');
     var current = 1;
-    var i = 0;
 
-    items.each(function () {
+    items.each(function (i) {
       var item = $(this);
       item.data('idx', i + 1);
 
