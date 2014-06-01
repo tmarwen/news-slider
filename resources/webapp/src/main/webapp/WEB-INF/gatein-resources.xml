@@ -28,7 +28,7 @@
     <portlet-name>ContentListViewerPortlet</portlet-name>
     <skin-name>Default</skin-name>
     <css-path>/skin/Stylesheet.css</css-path>
-    <css-priority>15</css-priority>
+    <css-priority>40</css-priority>
   </portlet-skin>
 
   <module>
