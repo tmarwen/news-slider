@@ -1,44 +1,47 @@
 News Slider
 ===========
+Prerequisites
+--
+* Maven 3+
+* eXo Platform 4+
+
 Description
 --
-*Get an animated news slider in 5 steps!*
+*Get an animated news slider in 4 steps!*
 
 How to install
 --
-1. **Cloning the project:** 
+1. **Clone the project:**
   * Go to the GitHub repository [exo-addons/news-slider](http://github.com/exo-addons/news-slider "exo-addons/news-slider") and clone the project.
+  * Switch to the eXo Platform 4.0.x compliant branch.
 
 
+2. **Build the sources:**
+  Using a command terminal, execute underline maven command:
 
-2. **Adding resources:** 
-  * Go to the back-office of eXo Platform (using the File Explorer). 
-  * Add a content folder (`NewsFolder` for example) in which you'll store the news items (for example under `/shared`), you may create news using the '`Free Layout Webcontent`' template, try to add an illustration image and fileout a summary, in order to be displayed as a preview of the news in our news silder.  
-    _PS: For tests, you can import the artificat `NewsFolder.xml` into your File System_.
-  * Upload the CSS file `NewsSlider.css` to any location you want (for example: under `/shared/css`) and copy its path`[1]`.
-  * Upload the JS file `jquery.easing.min.js` (which is the JQuery librairy) to any location you want (for example: under `/shared/js`) and copy its path`[2]`.       
+     ```~ $ mvn package -Ddest.server.path=/path/to/tomcat/root/directory```
 
+     It will copy the built jars under _lib/_ folder and the built wars under _webapps/_ (Tomcat specific artifacts directories).
 
- 
-3. **Update the resources paths:** 
-  * Go to the template file `NewsSliderCLVTemplate.gtmpl` and update the exacte location of the resources, for both JS and CSS files (already saved in `[1]` and `[2]`, if not go back to this files `/shared/js` and `/shared/css`, right click on the file, select the last menu entry  '`Copy URL to clipboard`'  and past it the `src` parameter like below:
-                    
-            <link rel="stylesheet" type="text/css" href="/rest/jcr/repository/collaboration/sites content/live/shared/css/NewsSlider.css" media="all"/>
-            <script type="text/javascript" src="/rest/jcr/repository/collaboration/sites content/live/shared/js/jquery.easing.1.3.js"></script>
-  * Ensure that the path is not a private link in order to make the news viewable for guests (for that, delete `/private` from the path).
+     **Note:** The **_dest.server.path_** property is used to mention the destination server root path where the built artifacts will be copied to. Unless you specify a path, the packaged jars/wars will be copied under the default maven build directory (_$MODULE/target_).
+
+     In case you are using another Application Server rather that _Tomcat AS_, you will need explicitly to specify the target built directories, e.g. for a _4.0.x eXo JBoss Bundle_ it should be as follows:
+
+     ```~ $ mvn package -Ddest.server.path=/path/to/jboss/root/directory
+                        -DwarBuildDir=/standalone/deployments/platform.ear
+                        -DjarBuildDir=/standalone/deployments/platform.ear/lib```
 
 
-4. **Add the template via IDE:** 
-  * Go to the IDE, select the `dms-system` workspace, navigate to  `exo:ecm > views > templates > content-list-viewer > list`  .
-  * Add a new template.
-  * Copy/Past the content of the GTMPL file `NewsSliderCLVTemplate.gtmpl` into this template and save it as `NewsSliderCLVTemplate`.
+3. **Add the template via Content Administration:**
+Now all your resources are in place and you can start up your server. If you are launching your server for the first time you can skip this step over and move on to the next one as the _NewsSliderCLVTemplate.gtmpl_ will be imported automatically with startup application templates, otherwise you will have to add it by yourself:
+  * From Admin navigation bar, go to _Adminstration > Content > Content Administration > Template > List > Add Template_.
+  * Copy and paste the content of the template file _NewsSliderCLVTemplate.gtmpl_ which you can find under _/news-slider/artifacts/src/main/resources/conf/portal/wcm-artifacts/application-templates/content-list-viewer_ with Template Name as `NewsSliderCLVTemplate.gtmpl`.
 
 
-
-5. **Add the CLV and configure it:**
+4. **Add the CLV and configure it:**
   * Now, we are ready to add our news slider into a website.
   * Go to a given website, ACME for example, edit the layout, add a new portlet `(content > content list)` to a given page.
-  * Edit this content list portlet, configure it by selecting the news folder path (in our case, '`/shared/NewsFolder`', and selecting our new CLV template `NewsSliderCLVTemplate`
+  * Edit this content list portlet, configure it by selecting the news folder path (for test purpose, you can import the _"NewFolder.xml"_ node which you can find under _news-slider/artifacts/src/main/resources/conf/portal/wcm/artifacts/site-resources/news-slider-templates_), and selecting our new CLV template `NewsSliderCLVTemplate`
   * It's possible also to configure the slider on terms of amount of news, existence of pagination or not.
 
 **Enjoy!**
